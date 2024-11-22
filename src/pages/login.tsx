@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import axios from "axios";
 
 const Login = () => {
@@ -21,15 +21,16 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div style={containerStyle}>
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={formStyle}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={inputStyle}
         />
         <input
           type="password"
@@ -37,11 +38,33 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={inputStyle}
         />
-        <button type="submit">Login</button>
+        <button type="submit" style={buttonStyle}>Login</button>
       </form>
     </div>
   );
+};
+
+// Styles using CSSProperties
+const containerStyle: CSSProperties = { textAlign: "center", marginTop: "50px" };
+const formStyle: CSSProperties = { display: "inline-block", textAlign: "left" };
+const inputStyle: CSSProperties = {
+  display: "block",
+  width: "100%",
+  padding: "10px",
+  margin: "10px 0",
+  border: "1px solid #ddd",
+  borderRadius: "5px",
+  color: "black",
+};
+const buttonStyle: CSSProperties = {
+  backgroundColor: "#4CAF50",
+  color: "white",
+  padding: "10px 15px",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
 };
 
 export default Login;

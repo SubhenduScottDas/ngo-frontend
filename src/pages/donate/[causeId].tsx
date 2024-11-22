@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, CSSProperties } from "react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { Cause } from "../../types/cause"; 
@@ -11,11 +11,11 @@ const Donate = () => {
 
   useEffect(() => {
     if (causeId) {
-      // Fetch the cause details from the backend
+        // Fetch the cause details from the backend
       fetch(`http://localhost:8000/api/causes/${causeId}`)
-        .then(res => res.json())
-        .then(data => setCause(data))
-        .catch(err => console.error(err));
+        .then((res) => res.json())
+        .then((data) => setCause(data))
+        .catch((err) => console.error(err));
     }
   }, [causeId]);
 
@@ -36,7 +36,7 @@ const Donate = () => {
       const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
       const signer = provider.getSigner(); // Assuming the user has MetaMask connected
       const contract = new ethers.Contract(contractAddress, [
-        "function donate(uint _causeId) public payable"
+        "function donate(uint _causeId) public payable",
       ], await signer);
 
       const tx = await contract.donate(causeId, { value: ethers.parseEther(amount) });
@@ -49,21 +49,39 @@ const Donate = () => {
     }
   };
 
-  if (!cause) return <div>Loading...</div>;
+  if (!cause) return <div style={loadingStyle}>Loading...</div>;
 
   return (
-    <div>
+    <div style={containerStyle}>
       <h1>Donate to {cause.name}</h1>
       <p>{cause.description}</p>
-      <input 
-        type="number" 
-        value={amount} 
-        onChange={(e) => setAmount(e.target.value)} 
-        placeholder="Enter donation amount (ETH)" 
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter donation amount (ETH)"
+        style={inputStyle}
       />
-      <button onClick={handleDonation}>Donate</button>
+      <button onClick={handleDonation} style={buttonStyle}>Donate</button>
     </div>
   );
 };
+
+const containerStyle: CSSProperties = { textAlign: "center", marginTop: "50px" };
+const inputStyle: CSSProperties = {
+  padding: "10px",
+  margin: "10px 0",
+  width: "200px",
+  color: "black",
+};
+const buttonStyle: CSSProperties = {
+  padding: "10px 20px",
+  backgroundColor: "#4CAF50",
+  color: "white",
+  border: "none",
+  cursor: "pointer",
+  borderRadius: "5px",
+};
+const loadingStyle: CSSProperties = { textAlign: "center", marginTop: "50px", fontSize: "18px" };
 
 export default Donate;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import axios from "axios";
 
 const Register = () => {
@@ -22,21 +22,23 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div style={containerStyle}>
       <h1>Register Cause</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={formStyle}>
         <input
           type="text"
           placeholder="Cause Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          style={inputStyle}
         />
         <textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+          style={textareaStyle}
         />
         <input
           type="number"
@@ -44,11 +46,36 @@ const Register = () => {
           value={goalAmount}
           onChange={(e) => setGoalAmount(e.target.value)}
           required
+          style={inputStyle}
         />
-        <button type="submit">Register Cause</button>
+        <button type="submit" style={buttonStyle}>Register Cause</button>
       </form>
     </div>
   );
+};
+
+const containerStyle: CSSProperties = { textAlign: "center", marginTop: "50px" };
+const formStyle: CSSProperties = { display: "inline-block", textAlign: "left" };
+const inputStyle: CSSProperties = {
+  display: "block",
+  width: "100%",
+  padding: "10px",
+  margin: "10px 0",
+  border: "1px solid #ddd",
+  borderRadius: "5px",
+  color: "black",
+};
+const textareaStyle: CSSProperties = {
+  ...inputStyle,
+  height: "100px",
+};
+const buttonStyle: CSSProperties = {
+  backgroundColor: "#4CAF50",
+  color: "white",
+  padding: "10px 15px",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
 };
 
 export default Register;

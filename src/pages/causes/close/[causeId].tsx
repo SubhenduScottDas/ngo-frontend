@@ -15,7 +15,6 @@ const CloseCause = () => {
       setSuccess(null);
 
       await axios.put(`http://localhost:8000/api/causes/close/${causeId}`);
-
       setSuccess("Cause closed successfully.");
     } catch (err: any) {
       setError(err.response?.data?.error || "Failed to close cause.");
@@ -23,11 +22,16 @@ const CloseCause = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px", maxWidth: "500px", margin: "auto" }}>
       <h1>Close Cause</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>{success}</p>}
-      <button onClick={handleClose}>Close Cause</button>
+      <button 
+        onClick={handleClose} 
+        style={{ padding: "10px 20px", backgroundColor: "red", color: "white", border: "none", cursor: "pointer" }}
+      >
+        Close Cause
+      </button>
     </div>
   );
 };
